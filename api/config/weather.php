@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
 
     /*
@@ -16,6 +14,9 @@ return [
     'open-weather' => [
         'key' => env('OPEN_WEATHER_API_KEY')
     ],
+    'weatherstack' => [
+        'key' => env('WEATHERSTACK_API_KEY')
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -26,6 +27,22 @@ return [
     |
     */
     'driver' => \App\Services\Weather\Drivers\OpenWeather::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Driver Fallbacks
+    |--------------------------------------------------------------------------
+    |
+    | The drivers you want to use to retrieve the user's whether
+    | if the above selected driver is unavailable.
+    |
+    | These will be called upon in order (first to last).
+    |
+    */
+
+    'fallbacks' => [
+        \App\Services\Weather\Drivers\Weatherstack::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
