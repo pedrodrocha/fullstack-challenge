@@ -38,6 +38,8 @@ class OpenWeather extends Driver
         $weather->sea_level = $data->main->sea_level ?? null;
         $weather->wind_speed = $data->wind->speed ?? null;
         $weather->wind_deg = $data->wind->deg ?? null;
+        $weather->wind_gust = $data->wind->gust ?? null;
+        $weather->clouds = $data->clouds->all ?? null;
         $weather->sunrise = $data->sys->sunrise ?? null;
         $weather->sunset = $data->sys->sunset ?? null;
         $weather->country = $data->sys->country ?? null;

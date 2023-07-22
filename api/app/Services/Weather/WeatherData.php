@@ -21,11 +21,15 @@ class WeatherData implements Arrayable
 
     public ?string $pressure;
 
+    public ?string $clouds;
+
     public ?string $humidity;
 
     public ?string $sea_level;
 
     public ?string $wind_speed;
+
+    public ?string $wind_gust;
 
     public ?string $wind_deg;
 
