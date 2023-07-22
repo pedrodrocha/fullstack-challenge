@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Classes\Weather\WeatherManager;
+use App\Services\Weather\WeatherManager;
 use Illuminate\Support\ServiceProvider;
 
 class WeatherServiceProvider extends ServiceProvider

@@ -11,7 +11,7 @@ return [
         ]
     ],
 
-    'driver' => \App\Classes\Weather\Drivers\OpenWeather::class,
+    'driver' => \App\Services\Weather\Drivers\OpenWeather::class,
 
 
 ];

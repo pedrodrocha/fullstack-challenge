@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\Weather\Drivers;
+namespace App\Services\Weather\Drivers;
 
 abstract class Driver
 {

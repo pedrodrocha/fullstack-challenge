@@ -211,7 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Weather' => App\Classes\Weather\WeatherManager::class,
+        'Weather' => App\Services\Weather\WeatherManager::class,
     ])->toArray(),
 
 ];

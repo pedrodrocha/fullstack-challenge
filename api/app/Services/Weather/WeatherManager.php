@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Classes\Weather;
+namespace App\Services\Weather;
 
-use App\Classes\Weather\Drivers\Driver;
+use App\Services\Weather\Drivers\Driver;
 
 class WeatherManager
 {
