@@ -64,13 +64,14 @@ class WeatherManager
     /**
      * Attempt to retrieve the weather of the user.
      */
-    public function get(int $lat, int $long)
+    public function get(float $lat, float $long)
     {
-        if ($weather = $this->driver->get($lat, $long)) {
-            return $weather;
-        }
+        $weather = $this->driver->get([
+            'lat' => $lat,
+            'long' => $long,
+        ]);
 
-        return false;
+        return $weather;
     }
 
 

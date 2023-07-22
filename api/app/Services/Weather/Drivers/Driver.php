@@ -5,12 +5,13 @@ namespace App\Services\Weather\Drivers;
 abstract class Driver
 {
 
-    public function get($lat, $long)
+    public function get(array $location)
     {
-        echo $lat;
-        echo $long;
+        $this->process($location);
     }
 
-    abstract protected function process();
+    abstract protected function process(array $location);
+
+    abstract protected function hydrate();
 
 }
