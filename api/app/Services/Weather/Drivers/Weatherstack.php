@@ -2,14 +2,11 @@
 
 namespace App\Services\Weather\Drivers;
 
-use Illuminate\Support\Fluent;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
 use App\Services\Weather\WeatherData;
+use Illuminate\Support\Facades\Http;
 
 class Weatherstack extends Driver
 {
-
     /**
      * Location with longitude and latitude
      *
@@ -27,7 +24,7 @@ class Weatherstack extends Driver
 
     protected function hydrate(WeatherData $weather, object $data): WeatherData
     {
-        $weather->lat = round($this->location['lat'], 2) ;
+        $weather->lat = round($this->location['lat'], 2);
         $weather->long = round($this->location['long'], 2);
         $weather->weather = $data->current->weather_descriptions[0] ?? null;
         $weather->temp = $data->current->temperature ?? null;
@@ -68,5 +65,4 @@ class Weatherstack extends Driver
 
         return  (object) [];
     }
-
 }

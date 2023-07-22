@@ -2,14 +2,11 @@
 
 namespace App\Services\Weather\Drivers;
 
-use Illuminate\Support\Fluent;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
 use App\Services\Weather\WeatherData;
+use Illuminate\Support\Facades\Http;
 
 class ApiNinjas extends Driver
 {
-
     /**
      * Location with longitude and latitude
      *
@@ -27,7 +24,7 @@ class ApiNinjas extends Driver
 
     protected function hydrate(WeatherData $weather, object $data): WeatherData
     {
-        $weather->lat = round($this->location['lat'], 2) ;
+        $weather->lat = round($this->location['lat'], 2);
         $weather->long = round($this->location['long'], 2);
         $weather->temp = $data->temp ?? null;
         $weather->temp_min = $data->min_temp ?? null;

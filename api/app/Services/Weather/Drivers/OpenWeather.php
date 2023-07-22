@@ -2,14 +2,11 @@
 
 namespace App\Services\Weather\Drivers;
 
-use Illuminate\Support\Fluent;
-use Illuminate\Http\Client\Response;
-use Illuminate\Support\Facades\Http;
 use App\Services\Weather\WeatherData;
+use Illuminate\Support\Facades\Http;
 
 class OpenWeather extends Driver
 {
-
     /**
      * Location with longitude and latitude
      *
@@ -27,7 +24,7 @@ class OpenWeather extends Driver
 
     protected function hydrate(WeatherData $weather, object $data): WeatherData
     {
-        $weather->lat = $data->coord->lat ?? round($this->location['lat'], 2) ;
+        $weather->lat = $data->coord->lat ?? round($this->location['lat'], 2);
         $weather->long = $data->coord->lon ?? round($this->location['long'], 2);
         $weather->weather = $data->weather[0]->main ?? null;
         $weather->temp = $data->main->temp ?? null;

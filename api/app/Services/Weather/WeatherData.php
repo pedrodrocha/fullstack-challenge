@@ -2,8 +2,8 @@
 
 namespace App\Services\Weather;
 
-use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Fluent;
 
 class WeatherData implements Arrayable
 {

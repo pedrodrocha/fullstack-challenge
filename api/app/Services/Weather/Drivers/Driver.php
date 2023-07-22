@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Services\Weather\Drivers;
-use Illuminate\Support\Fluent;
+
 use App\Services\Weather\WeatherData;
 
 abstract class Driver
 {
-
     public function get(array $location): WeatherData
     {
         $data = $this->process($location);
@@ -35,5 +34,4 @@ abstract class Driver
      * Hydrate the Weather data object with the given weather data.
      */
     abstract protected function hydrate(WeatherData $weather, object $data): WeatherData;
-
 }
