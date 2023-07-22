@@ -10,17 +10,25 @@ use App\Services\Weather\WeatherData;
 class OpenWeather extends Driver
 {
 
-    protected function process(array $location)
+    /**
+     * Location with longitude and latitude
+     *
+     * @var array
+     */
+    private $location;
+
+    protected function process(array $location): object
     {
-        $url = $this->getUrl($location);
+        $this->location = $location;
+        $url = $this->getUrl();
 
         return $this->getWeather($url);
     }
 
-    protected function hydrate(WeatherData $weather, object $data)
+    protected function hydrate(WeatherData $weather, object $data): WeatherData
     {
-        $weather->lat = $data->coord->lat;
-        $weather->long = $data->coord->lon;
+        $weather->lat = $data->coord->lat ?? round($this->location['lat'], 2) ;
+        $weather->long = $data->coord->lon ?? round($this->location['long'], 2);
         $weather->weather = $data->weather[0]->main ?? null;
         $weather->temp = $data->main->temp ?? null;
         $weather->temp_min = $data->main->temp_min ?? null;
@@ -39,24 +47,29 @@ class OpenWeather extends Driver
     }
 
     /**
-     *
+     *  Method for building an url for requesting Open Weather.
      */
-    protected function getUrl(array $location): string
+    protected function getUrl(): string
     {
-        $lat = round($location['lat'], 2);
-        $long = round($location['long'], 2);
+        $lat = round($this->location['lat'], 2);
+        $long = round($this->location['long'], 2);
 
         $key = config('weather.connections')['open-weather']['key'];
 
         return "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$key";
     }
 
-    protected function getWeather(string $url): bool|object
+    /**
+     * Method for requesting Open Weather the weather for a location.
+     */
+    protected function getWeather(string $url): object
     {
-
         $response = Http::get($url);
 
-        return $response->object();
+        if ($response->status() === 200) {
+            return $response->object();
+        }
 
+        return  (object) [];
     }
 }

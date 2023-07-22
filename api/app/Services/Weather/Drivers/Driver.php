@@ -26,8 +26,14 @@ abstract class Driver
         return app(config('weather.weather', WeatherData::class));
     }
 
-    abstract protected function process(array $location);
+    /**
+     * Attempt to fetch and process the whether data from the driver.
+     */
+    abstract protected function process(array $location): object;
 
+    /**
+     * Hydrate the Weather data object with the given weather data.
+     */
     abstract protected function hydrate(WeatherData $weather, object $data);
 
 }
