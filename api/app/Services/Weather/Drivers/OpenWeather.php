@@ -54,7 +54,7 @@ class OpenWeather extends Driver
         $lat = round($this->location['lat'], 2);
         $long = round($this->location['long'], 2);
 
-        $key = config('weather.connections')['open-weather']['key'];
+        $key = config('weather.open-weather')['key'];
 
         return "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$key";
     }
