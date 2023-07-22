@@ -12,5 +12,7 @@ return [
 
     'driver' => \App\Services\Weather\Drivers\OpenWeather::class,
 
+    'data' => \App\Services\Weather\WeatherData::class,
+
 
 ];
