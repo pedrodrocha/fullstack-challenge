@@ -21,7 +21,7 @@ abstract class Driver
     /**
      * Create a new whether instance.
      */
-    protected function makeWeather()
+    protected function makeWeather(): WeatherData
     {
         return app(config('weather.weather', WeatherData::class));
     }
@@ -34,6 +34,6 @@ abstract class Driver
     /**
      * Hydrate the Weather data object with the given weather data.
      */
-    abstract protected function hydrate(WeatherData $weather, object $data);
+    abstract protected function hydrate(WeatherData $weather, object $data): WeatherData;
 
 }

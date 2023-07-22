@@ -3,6 +3,7 @@
 namespace App\Services\Weather;
 
 use App\Services\Weather\Drivers\Driver;
+use App\Services\Weather\Exceptions\DriverDoesNotExistException;
 
 class WeatherManager
 {
@@ -50,6 +51,9 @@ class WeatherManager
      */
     protected function getDriver(string $driver): Driver
     {
+        if (! class_exists($driver)) {
+            throw DriverDoesNotExistException::forDriver($driver);
+        }
         return app($driver);
     }
 

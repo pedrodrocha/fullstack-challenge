@@ -15,7 +15,7 @@ class OpenWeather extends Driver
      *
      * @var array
      */
-    private $location;
+    protected $location;
 
     protected function process(array $location): object
     {
