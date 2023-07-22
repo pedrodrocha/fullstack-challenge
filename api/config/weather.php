@@ -12,10 +12,13 @@ return [
     */
 
     'open-weather' => [
-        'key' => env('OPEN_WEATHER_API_KEY')
+        'key' => env('OPEN_WEATHER_API_KEY'),
     ],
     'weatherstack' => [
-        'key' => env('WEATHERSTACK_API_KEY')
+        'key' => env('WEATHERSTACK_API_KEY'),
+    ],
+    'api-ninjas' => [
+        'key' => env('API_NINJAS_KEY'),
     ],
 
     /*
@@ -42,6 +45,7 @@ return [
 
     'fallbacks' => [
         \App\Services\Weather\Drivers\Weatherstack::class,
+        \App\Services\Weather\Drivers\ApiNinjas::class,
     ],
 
     /*
