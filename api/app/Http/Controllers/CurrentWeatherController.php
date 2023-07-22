@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use App\Actions\User\RetrieveCurrentWeather;
 
@@ -26,6 +27,7 @@ class CurrentWeatherController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $weather,
+                'a' => \Redis::connection(),
             ], 200);
         }
 
