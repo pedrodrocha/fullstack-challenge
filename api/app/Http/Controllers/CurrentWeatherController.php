@@ -27,7 +27,6 @@ class CurrentWeatherController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $weather,
-                'a' => \Redis::connection(),
             ], 200);
         }
 
