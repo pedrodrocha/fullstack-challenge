@@ -44,8 +44,8 @@ return [
     */
 
     'fallbacks' => [
-        \App\Services\Weather\Drivers\Weatherstack::class,
         \App\Services\Weather\Drivers\ApiNinjas::class,
+        \App\Services\Weather\Drivers\Weatherstack::class,
     ],
 
     /*

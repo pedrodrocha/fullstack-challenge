@@ -13,6 +13,13 @@ class WeatherManager
     protected Driver $driver;
 
     /**
+     * The loaded drivers.
+     *
+     * @var Driver[]
+     */
+    protected array $loaded = [];
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -35,29 +42,13 @@ class WeatherManager
      */
     public function setDefaultDriver(): static
     {
-        $driver = $this->getDriver($this->getDefaultDriver());
+        $this->loaded[] = $driver = $this->getDriver($this->getDefaultDriver());
 
-        return $this->setDriver($driver);
-    }
-
-    /**
-     * Attempt to create the weather driver.
-     */
-    protected function getDriver(string $driver): Driver
-    {
-        if (! class_exists($driver)) {
-            throw DriverDoesNotExistException::forDriver($driver);
+        foreach ($this->getDriverFallbacks() as $fallback) {
+            $driver->fallback($this->loaded[] = $this->getDriver($fallback));
         }
 
-        return app($driver);
-    }
-
-    /**
-     * Get the default weather driver.
-     */
-    protected function getDefaultDriver(): string
-    {
-        return config('weather.driver');
+        return $this->setDriver($driver);
     }
 
     /**
@@ -71,5 +62,43 @@ class WeatherManager
         ]);
 
         return $weather;
+    }
+
+    /**
+     * Get the loaded driver instances.
+     *
+     * @return Driver[]
+     */
+    public function drivers(): array
+    {
+        return $this->loaded;
+    }
+
+    /**
+     * Get the fallback location drivers to use.
+     */
+    protected function getDriverFallbacks(): array
+    {
+        return config('weather.fallbacks', []);
+    }
+
+    /**
+     * Get the default weather driver.
+     */
+    protected function getDefaultDriver(): string
+    {
+        return config('weather.driver');
+    }
+
+    /**
+     * Attempt to create the weather driver.
+     */
+    protected function getDriver(string $driver): Driver
+    {
+        if (! class_exists($driver)) {
+            throw DriverDoesNotExistException::forDriver($driver);
+        }
+
+        return app($driver);
     }
 }
