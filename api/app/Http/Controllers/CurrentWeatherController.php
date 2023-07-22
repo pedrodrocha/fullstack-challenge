@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Actions\User\RetrieveCurrentWeather;
 
 class CurrentWeatherController extends Controller
 {
 
-    public function show(Request $request, int $userId)
+    public function show(Request $request, RetrieveCurrentWeather $action, int $userId)
     {
         $validator = Validator::make(['user_id' => $userId], [
             'user_id' => ['required', 'exists:users,id'],
@@ -20,11 +22,18 @@ class CurrentWeatherController extends Controller
             ], 404);
         }
 
+        if ($weather = $action->handle(User::find($userId))) {
+            return response()->json([
+                'success' => true,
+                'data' => $weather,
+            ], 200);
+        }
 
         return response()->json([
-            'success' => true,
-            'id' => $userId,
+            'success' => false,
         ], 200);
+
+
     }
 
 }
