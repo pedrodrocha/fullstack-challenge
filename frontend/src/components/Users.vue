@@ -1,5 +1,5 @@
 <script lang="ts">
-import Spinner from '@/partials/Spinner.vue';
+import Spinner from '@/components/Spinner.vue';
 import Profile from '@/components/Profile.vue';
 
 import { defineComponent } from 'vue'
