@@ -7,8 +7,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     data: () => ({
-        Weather: null,
-        details: false,
+        Weather: null
     }),
     props: {
         id: Number
@@ -30,10 +29,9 @@ export default defineComponent({
             return Math.round((now.getTime() - last.getTime()) / 60000)
         },
         async updateWeather() {
-            console.log('aa')
             this.Weather = null
             await this.fetchData(true)
-        }
+        },
     }
     
 })
@@ -41,12 +39,6 @@ export default defineComponent({
 
 <template>
     <div class="flex flex-col w-full h-full">
-
-        <div v-if="details">
-            <p>
-                MOOREEE
-            </p>
-        </div>
 
         <div class="flex flex-col items-center gap-2 mb-8">
             <p class="text-gray-900 font-medium font-medium font-sans">
@@ -83,7 +75,7 @@ export default defineComponent({
                 </p>                        
             </button>
 
-            <button v-if="Weather" type="button" @click="details = !details">
+            <button v-if="Weather" type="button" @click="$emit('openDetails', Weather.data)">
                 <p class="text-sky-900 font-bold text-sm">
                     More Details
                 </p>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class RetrieveCurrentWeather
 {
-    public function handle(User $user, bool|NULL $refresh): array
+    public function handle(User $user, bool $refresh): array
     {
         if (! Cache::has('weather_'.$user->id) || $refresh) {
             $weather = new \Weather();
