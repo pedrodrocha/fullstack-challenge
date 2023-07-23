@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import ApiTest from "@/components/ApiTest.vue";
+
 </script>
 
 <template>
   <main>
-    <!-- <api-test></api-test> -->
-    <h1 class="text-3xl font-sans underline">
-      Hello world!
-    </h1>
+    <div class="flex flex-col flex-nowrap gap-8 my-6 mx-10">
+      <Users></Users>
+    </div>
   </main>
 </template>
