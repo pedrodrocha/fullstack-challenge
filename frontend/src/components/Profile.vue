@@ -17,7 +17,7 @@ export default defineComponent({
         <p class="font-sans font-bold text-indigo-950 mb-4">
             <code> {{ profile.name }} </code>
         </p>
-    <Temperature :profile="profile"/>
+    <Temperature :id="profile.id"/>
 
     </div>   
 </template>

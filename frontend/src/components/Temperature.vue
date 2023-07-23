@@ -1,13 +1,28 @@
 <script lang="ts">
 import RefreshIcon from '@/components/icons/RefreshIcon.vue';
+import { getUserWeather } from '@/helpers/api-requests'
+
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+    data: () => ({
+        Weather: null,
+        details: false,
+    }),
     props: {
-        profile: Object
+        id: Number
     },
     components: {
         RefreshIcon,
+    },
+    created() {
+        this.fetchData()
+    },
+    methods: {
+        async fetchData() {
+            const url = 'http://localhost/users/weather/' + this.id
+            this.Weather = await getUserWeather(url)
+        },
     }
     
 })
@@ -15,13 +30,38 @@ export default defineComponent({
 
 <template>
     <div class="flex flex-col w-full h-full">
+
+        <div v-if="details">
+            <p>
+                MOOREEE
+            </p>
+        </div>
+
         <div class="flex flex-col items-center gap-2 mb-8">
             <p class="text-gray-900 font-medium font-medium font-sans">
                 Current Temperature
             </p>
-            <p class="font-serif font-bold text-4xl text-gray-700">
-                36ºC
-            </p>
+
+            <div v-if="!Weather" class="bg-slate-400 h-10 w-24 animate-pulse">
+            </div>
+
+            <div v-if="Weather">
+                <div v-if="Weather.data.temp">
+                    <p class="font-serif font-bold text-4xl text-gray-700">
+                        <code>{{ Math.round(Weather.data.temp) }}</code> ºC
+                    </p>
+                </div>
+
+                <div v-if="!Weather.data.temp">
+                    <p class="font-serif font-bold text-sm text-red-600 text-center">
+                        Oops.. something went wrong
+                    </p>
+                    <p class="font-serif font-bold text-sm text-red-600 text-center">
+                        Try refreshing the card
+                    </p>
+                </div>
+            </div>
+
         </div>
 
         <div class="flex flex-row flex-nowrap justify-between w-full px-2 mb-4">
@@ -34,7 +74,7 @@ export default defineComponent({
                         
                 </button>
             </div>
-            <button type="button">
+            <button type="button" @click="details = !details">
                 <p class="text-sky-900 font-bold text-sm">
                     More Details
                 </p>
