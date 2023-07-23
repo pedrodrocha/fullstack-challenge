@@ -5,6 +5,8 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/main.css";
+import '@fontsource/roboto-slab'
+import '@fontsource/roboto'
 
 const app = createApp(App);
 

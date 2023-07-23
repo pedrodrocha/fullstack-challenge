@@ -5,7 +5,7 @@ import ApiTest from "@/components/ApiTest.vue";
 <template>
   <main>
     <!-- <api-test></api-test> -->
-    <h1 class="text-3xl font-bold underline">
+    <h1 class="text-3xl font-sans underline">
       Hello world!
     </h1>
   </main>
