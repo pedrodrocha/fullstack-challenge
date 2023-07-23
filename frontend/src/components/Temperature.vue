@@ -1,6 +1,7 @@
 <script lang="ts">
 import RefreshIcon from '@/components/icons/RefreshIcon.vue';
-import { getUserWeather } from '@/helpers/api-requests'
+import { getUserWeather } from '@/helpers/api-requests';
+
 
 import { defineComponent } from 'vue'
 
@@ -23,6 +24,11 @@ export default defineComponent({
             const url = 'http://localhost/users/weather/' + this.id
             this.Weather = await getUserWeather(url)
         },
+        lastUpdate(last: Date) {
+            let now = new Date();
+
+            return Math.round((now.getTime() - last.getTime()) / 60000)
+        }
     }
     
 })
@@ -65,25 +71,30 @@ export default defineComponent({
         </div>
 
         <div class="flex flex-row flex-nowrap justify-between w-full px-2 mb-4">
-            <div>
-                <button type="button" class="flex flex-row flex-nowrap items-center justify-center gap-2">
-                    <div class="h-3 w-3"><RefreshIcon/></div>
-                    <p class="text-sky-900 font-bold text-sm">
-                        Refresh
-                    </p>
-                        
-                </button>
-            </div>
-            <button type="button" @click="details = !details">
+            <button v-if="Weather" type="button" class="flex flex-row flex-nowrap items-center justify-center gap-2">
+                <div class="h-3 w-3"><RefreshIcon/></div>
+                <p class="text-sky-900 font-bold text-sm">
+                    Refresh
+                </p>                        
+            </button>
+
+            <button v-if="Weather" type="button" @click="details = !details">
                 <p class="text-sky-900 font-bold text-sm">
                     More Details
                 </p>
             </button>
+
+            <div v-if="!Weather" class="bg-slate-400 h-6 w-20 animate-pulse"></div>
+            <div v-if="!Weather" class="bg-slate-400 h-6 w-20 animate-pulse"></div>
         </div>
 
         <div>
-            <p class="font-serif font-light text-slate-400  text-xs self-start justify-self-start">
-                Last Updated: <span>30 min</span> ago
+
+            <div v-if="!Weather" class="bg-slate-400 h-3 w-24 animate-pulse">
+            </div>
+
+            <p v-if="Weather" class="font-serif font-light text-slate-400  text-xs self-start justify-self-start">
+                Last Updated: <span v-text="lastUpdate(new Date(this.Weather.last_retrieved))"> </span> min ago
             </p>
         </div>
     </div>
