@@ -11,6 +11,7 @@ class CurrentWeatherController extends Controller
 {
     public function show(Request $request, RetrieveCurrentWeather $action, int $userId)
     {
+
         $validator = Validator::make(['user_id' => $userId], [
             'user_id' => ['required', 'exists:users,id'],
         ])->stopOnFirstFailure(true);
@@ -21,11 +22,13 @@ class CurrentWeatherController extends Controller
             ], 404);
         }
 
-        if ($weather = $action->handle(User::find($userId))) {
+        $refresh = $request['refresh'] === 'refresh' ? true : false;
+
+        if ($weather = $action->handle(User::find($userId), $refresh)) {
             return response()->json([
                 'success' => true,
                 'data' => $weather['data'],
-                'last_retrieved' => $weather['retrieved'],
+                'last_retrieved' => $weather['retrieved']
             ], 200);
         }
 

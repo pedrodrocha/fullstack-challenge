@@ -17,17 +17,22 @@ export default defineComponent({
         RefreshIcon,
     },
     created() {
-        this.fetchData()
+        this.fetchData(false)
     },
     methods: {
-        async fetchData() {
+        async fetchData(refresh: boolean) {
             const url = 'http://localhost/users/weather/' + this.id
-            this.Weather = await getUserWeather(url)
+            this.Weather = await getUserWeather(url, refresh)
         },
         lastUpdate(last: Date) {
             let now = new Date();
 
             return Math.round((now.getTime() - last.getTime()) / 60000)
+        },
+        async updateWeather() {
+            console.log('aa')
+            this.Weather = null
+            await this.fetchData(true)
         }
     }
     
@@ -71,7 +76,7 @@ export default defineComponent({
         </div>
 
         <div class="flex flex-row flex-nowrap justify-between w-full px-2 mb-4">
-            <button v-if="Weather" type="button" class="flex flex-row flex-nowrap items-center justify-center gap-2">
+            <button v-if="Weather" @click="updateWeather" type="button" class="flex flex-row flex-nowrap items-center justify-center gap-2">
                 <div class="h-3 w-3"><RefreshIcon/></div>
                 <p class="text-sky-900 font-bold text-sm">
                     Refresh

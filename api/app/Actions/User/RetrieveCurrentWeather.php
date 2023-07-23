@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Cache;
 
 class RetrieveCurrentWeather
 {
-    public function handle(User $user): array
+    public function handle(User $user, bool|NULL $refresh): array
     {
-        if (! Cache::has('weather_'.$user->id)) {
+        if (! Cache::has('weather_'.$user->id) || $refresh) {
             $weather = new \Weather();
             $weather = $weather->get($user->latitude, $user->longitude);
 
