@@ -1,5 +1,7 @@
 <script lang="ts">
 import Spinner from '@/partials/Spinner.vue';
+import Profile from '@/components/Profile.vue';
+
 import { defineComponent } from 'vue'
 import { getUserProfiles } from '../helpers/api-requests';
 
@@ -9,7 +11,8 @@ export default defineComponent({
     Profiles: null
   }),
   components: {
-    Spinner
+    Spinner,
+    Profile,
   },
   created() {
     this.fetchData()
@@ -31,11 +34,9 @@ export default defineComponent({
     <Spinner/>
   </div>
 
-  <div v-if="Profiles" class="flex flex-row flex-wrap gap-6 w-full justify-center">
-    <div v-for="users in Profiles" class="bg-slate-100 border border-gray-200 text-slate-900 w-72 h-56 p-4 shadow shadow-gray-200">
-        <p class="font-sans font-bold text-indigo-950">
-            <code> {{ users.name }} </code>
-        </p>
+  <div v-if="Profiles" class="flex flex-row flex-wrap gap-8 w-full justify-center">
+    <div v-for="profile in Profiles">
+        <Profile :profile="profile"/>
     </div>
   </div>
 </template>
