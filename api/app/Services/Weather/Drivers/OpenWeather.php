@@ -50,8 +50,8 @@ class OpenWeather extends Driver
      */
     protected function getUrl(): string
     {
-        $lat = round($this->location['lat'], 2);
-        $long = round($this->location['long'], 2);
+        $lat = $this->location['lat'];
+        $long = $this->location['long'];
 
         $key = config('weather.open-weather')['key'];
 
