@@ -5,12 +5,12 @@
                 <CloseIcon  @click="$emit('closeDetails')" class="absolute top-2 right-2 stroke-slate-50 cursor-pointer"/>
 
                 <div class="flex flex-col flex-nowrap gap-8 w-full h-full pt-10 items-center">
-                    <div v-if="details.weather">
+                    <div v-if="details?.weather">
                         <h2 v-text="details.weather" class="text-center font-serif font-bold text-2xl text-gray-50 select-none"></h2>
                     </div>
 
                     <div class="grid grid-cols-2 gap-x-6 gap-y-6 w-full p-0 justify-center">
-                        <div v-if="details.clouds" class="flex flex-col flex-nowrap items-center justify-center gap-1">
+                        <div v-if="details?.clouds" class="flex flex-col flex-nowrap items-center justify-center gap-1">
                             <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
                                 Clouds (%)
                             </p>
@@ -21,7 +21,7 @@
                         </div>
 
 
-                        <div v-if="details.humidity" class="flex flex-col flex-nowrap items-center justify-center gap-1">
+                        <div v-if="details?.humidity" class="flex flex-col flex-nowrap items-center justify-center gap-1">
                             <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
                                 Humidity
                             </p>
@@ -31,7 +31,7 @@
                             </p>
                         </div>
 
-                        <div v-if="details.wind_speed" class="flex flex-col flex-nowrap items-center justify-center gap-1">
+                        <div v-if="details?.wind_speed" class="flex flex-col flex-nowrap items-center justify-center gap-1">
                             <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
                                 Wind Speed
                             </p>
@@ -42,7 +42,7 @@
                         </div>
 
 
-                        <div v-if="details.wind_deg" class="flex flex-col flex-nowrap items-center justify-center gap-1">
+                        <div v-if="details?.wind_deg" class="flex flex-col flex-nowrap items-center justify-center gap-1">
                             <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
                                 Wind Degree
                             </p>
@@ -52,7 +52,7 @@
                             </p>
                         </div>
 
-                        <div v-if="details.wind_gust" class="flex flex-col flex-nowrap items-center justify-center gap-1">
+                        <div v-if="details?.wind_gust" class="flex flex-col flex-nowrap items-center justify-center gap-1">
                             <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
                                 Wind Gust
                             </p>
@@ -62,7 +62,7 @@
                             </p>
                         </div>
 
-                        <div v-if="details.pressure" class="flex flex-col flex-nowrap items-center justify-center gap-1">
+                        <div v-if="details?.pressure" class="flex flex-col flex-nowrap items-center justify-center gap-1">
                             <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
                                 Atmospheric Pressure
                             </p>

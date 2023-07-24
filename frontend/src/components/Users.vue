@@ -46,7 +46,7 @@
       
     data: () => ({
       profiles: false,
-      details: null,
+      details: false,
       modal: false,
       
 
@@ -65,7 +65,7 @@
         const url = 'http://localhost/'
         this.profiles = await getUserProfiles(url)
       },
-      openDetails(data) {
+      openDetails(data: Object) {
         this.details = data
         this.modal = true
       },
@@ -74,7 +74,7 @@
         this.details = null
       },
       async reloadUsers() {
-        this.profiles = null
+        this.profiles = false
         this.profiles = await this.fetchData()
 
         if (!this.profiles) {
