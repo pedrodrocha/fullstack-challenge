@@ -10,9 +10,9 @@ import { getUserProfiles } from '../helpers/api-requests';
 export default defineComponent({
     
   data: () => ({
-    Profiles: null,
+    profiles: false,
     details: null,
-    modal: null,
+    modal: false,
     
 
   }),
@@ -28,7 +28,7 @@ export default defineComponent({
   methods: {
     async fetchData() {
       const url = 'http://localhost/'
-      this.Profiles = await getUserProfiles(url)
+      this.profiles = await getUserProfiles(url)
     },
     openDetails(data) {
       this.details = data
@@ -39,11 +39,11 @@ export default defineComponent({
       this.details = null
     },
     async reloadUsers() {
-      this.Profiles = null
-      this.Profiles = await this.fetchData()
+      this.profiles = null
+      this.profiles = await this.fetchData()
 
-      if (!this.Profiles) {
-        this.Profiles = false
+      if (!this.profiles) {
+        this.profiles = false
       }
     }
   },
@@ -58,11 +58,11 @@ export default defineComponent({
     </h1>
 
 
-    <div v-if="Profiles === null" class="flex flex-col flex-nowrap w-full items-center">
+    <div v-if="!profiles" class="flex flex-col flex-nowrap w-full items-center">
       <Spinner/>
     </div>
 
-    <div v-if="Profiles === false" class="flex flex-col flex-nowrap w-full items-center">
+    <div v-if="false" class="flex flex-col flex-nowrap w-full items-center">
       <p class="font-sans text-red-500 font-bold mb-4">
         Oops.. Something went wrong
       </p>
@@ -73,8 +73,8 @@ export default defineComponent({
       </button>
     </div>
 
-    <div v-if="Profiles" class="flex flex-row flex-wrap gap-8 w-full justify-center max-w-screen-2xl">
-      <div v-for="profile in Profiles">
+    <div v-if="profiles" class="flex flex-row flex-wrap gap-8 w-full justify-center max-w-screen-2xl">
+      <div v-for="profile in profiles">
           <Profile :profile="profile" @open-details="openDetails"/>
       </div>
     </div>
