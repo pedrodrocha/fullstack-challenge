@@ -52,8 +52,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex flex-col flex-nowrap gap-8 my-6 w-full h-full">
-    <h1 class="font-serif font-bold text-4xl text-indigo-950 text-center ">
+  <div class="flex flex-col flex-nowrap gap-8 my-6 w-full h-full justify-center items-center">
+    <h1 class="font-serif font-bold text-4xl text-indigo-950 text-center">
         Users
     </h1>
 
@@ -73,7 +73,7 @@ export default defineComponent({
       </button>
     </div>
 
-    <div v-if="Profiles" class="flex flex-row flex-wrap gap-8 w-full justify-center">
+    <div v-if="Profiles" class="flex flex-row flex-wrap gap-8 w-full justify-center max-w-screen-2xl">
       <div v-for="profile in Profiles">
           <Profile :profile="profile" @open-details="openDetails"/>
       </div>
