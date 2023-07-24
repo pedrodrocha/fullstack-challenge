@@ -17,7 +17,7 @@ export default defineComponent({
 <template>
     <div class="absolute h-full w-full top-0">
       <div class="flex items-center justify-center z-10 fixed h-full w-full bg-slate-50/[.50]">
-            <div class="bg-slate-500 h-96 w-96 rounded shadow-lg p-2 relative">
+            <div class="bg-slate-500 h-96 w-96 rounded shadow-lg p-2 relative max-sm:mx-4">
                 <CloseIcon  @click="$emit('closeDetails')" class="absolute top-2 right-2 stroke-slate-50 cursor-pointer"/>
 
                 <div class="flex flex-col flex-nowrap gap-8 w-full h-full pt-10 items-center">
