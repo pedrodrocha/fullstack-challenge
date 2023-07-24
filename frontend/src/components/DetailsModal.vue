@@ -87,7 +87,7 @@
 
     export default defineComponent({
         props: {
-            details: Object,
+            details: [Object, Boolean],
         },
         components: {
             CloseIcon,
