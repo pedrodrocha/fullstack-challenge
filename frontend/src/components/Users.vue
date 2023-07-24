@@ -1,56 +1,3 @@
-<script lang="ts">
-import Spinner from '@/components/Spinner.vue';
-import Profile from '@/components/Profile.vue';
-import CloseIcon from "@/components/icons/CloseIcon.vue";
-import DetailsModal from '@/components/DetailsModal.vue';
-
-import { defineComponent } from 'vue'
-import { getUserProfiles } from '../helpers/api-requests';
-
-export default defineComponent({
-    
-  data: () => ({
-    profiles: false,
-    details: null,
-    modal: false,
-    
-
-  }),
-  components: {
-    Spinner,
-    Profile,
-    CloseIcon,
-    DetailsModal,
-  },
-  created() {
-    this.fetchData()
-  },
-  methods: {
-    async fetchData() {
-      const url = 'http://localhost/'
-      this.profiles = await getUserProfiles(url)
-    },
-    openDetails(data) {
-      this.details = data
-      this.modal = true
-    },
-    closeDetails() {
-      this.modal = false
-      this.details = null
-    },
-    async reloadUsers() {
-      this.profiles = null
-      this.profiles = await this.fetchData()
-
-      if (!this.profiles) {
-        this.profiles = false
-      }
-    }
-  },
-
-})
-</script>
-
 <template>
   <div class="flex flex-col flex-nowrap gap-8 my-6 w-full h-full justify-center items-center">
     <h1 class="font-serif font-bold text-4xl text-indigo-950 text-center">
@@ -85,3 +32,56 @@ export default defineComponent({
   
   </div>
 </template>
+
+<script lang="ts">
+  import Spinner from '@/components/Spinner.vue';
+  import Profile from '@/components/Profile.vue';
+  import CloseIcon from "@/components/icons/CloseIcon.vue";
+  import DetailsModal from '@/components/DetailsModal.vue';
+
+  import { defineComponent } from 'vue'
+  import { getUserProfiles } from '../helpers/api-requests';
+
+  export default defineComponent({
+      
+    data: () => ({
+      profiles: false,
+      details: null,
+      modal: false,
+      
+
+    }),
+    components: {
+      Spinner,
+      Profile,
+      CloseIcon,
+      DetailsModal,
+    },
+    created() {
+      this.fetchData()
+    },
+    methods: {
+      async fetchData() {
+        const url = 'http://localhost/'
+        this.profiles = await getUserProfiles(url)
+      },
+      openDetails(data) {
+        this.details = data
+        this.modal = true
+      },
+      closeDetails() {
+        this.modal = false
+        this.details = null
+      },
+      async reloadUsers() {
+        this.profiles = null
+        this.profiles = await this.fetchData()
+
+        if (!this.profiles) {
+          this.profiles = false
+        }
+      }
+    },
+
+  })
+</script>

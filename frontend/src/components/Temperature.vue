@@ -1,42 +1,3 @@
-<script lang="ts">
-import RefreshIcon from '@/components/icons/RefreshIcon.vue';
-import { getUserWeather } from '@/helpers/api-requests';
-
-
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-    data: () => ({
-        Weather: null
-    }),
-    props: {
-        id: Number
-    },
-    components: {
-        RefreshIcon,
-    },
-    created() {
-        this.fetchData(false)
-    },
-    methods: {
-        async fetchData(refresh: boolean) {
-            const url = 'http://localhost/users/weather/' + this.id
-            this.Weather = await getUserWeather(url, refresh)
-        },
-        lastUpdate(last: Date) {
-            let now = new Date();
-
-            return Math.round((now.getTime() - last.getTime()) / 60000)
-        },
-        async updateWeather() {
-            this.Weather = null
-            await this.fetchData(true)
-        },
-    }
-    
-})
-</script>
-
 <template>
     <div class="flex flex-col w-full h-full">
 
@@ -96,3 +57,42 @@ export default defineComponent({
         </div>
     </div>
 </template>
+
+<script lang="ts">
+    import RefreshIcon from '@/components/icons/RefreshIcon.vue';
+    import { getUserWeather } from '@/helpers/api-requests';
+
+
+    import { defineComponent } from 'vue'
+
+    export default defineComponent({
+        data: () => ({
+            Weather: null
+        }),
+        props: {
+            id: Number
+        },
+        components: {
+            RefreshIcon,
+        },
+        created() {
+            this.fetchData(false)
+        },
+        methods: {
+            async fetchData(refresh: boolean) {
+                const url = 'http://localhost/users/weather/' + this.id
+                this.Weather = await getUserWeather(url, refresh)
+            },
+            lastUpdate(last: Date) {
+                let now = new Date();
+
+                return Math.round((now.getTime() - last.getTime()) / 60000)
+            },
+            async updateWeather() {
+                this.Weather = null
+                await this.fetchData(true)
+            },
+        }
+        
+    })
+</script>

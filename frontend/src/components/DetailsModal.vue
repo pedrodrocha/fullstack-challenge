@@ -1,19 +1,3 @@
-<script lang="ts">
-import CloseIcon from "@/components/icons/CloseIcon.vue";
-
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-    props: {
-        details: Object,
-    },
-    components: {
-        CloseIcon,
-    }
-
-})
-</script>
-
 <template>
     <div class="absolute h-full w-full top-0 left-0">
       <div class="flex items-center justify-center z-10 fixed h-full w-full bg-slate-50/[.50]">
@@ -95,3 +79,19 @@ export default defineComponent({
         </div>
     </div>  
 </template>
+
+<script lang="ts">
+    import CloseIcon from "@/components/icons/CloseIcon.vue";
+
+    import { defineComponent } from 'vue'
+
+    export default defineComponent({
+        props: {
+            details: Object,
+        },
+        components: {
+            CloseIcon,
+        }
+
+    })
+</script>
