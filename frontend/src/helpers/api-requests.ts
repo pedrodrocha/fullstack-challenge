@@ -1,9 +1,14 @@
 import axios from "axios";
 
 export async function getUserProfiles(url: string) {
-    let response = await axios.get(url)
+    let response;
+    
+    response = await axios.get(url)
+        .catch(function (error) {
+            response = false
+        });
 
-    if (response.status) {
+    if (response && response.status) {
         return response.data.users
     }
 

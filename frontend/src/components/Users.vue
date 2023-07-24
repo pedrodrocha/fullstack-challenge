@@ -37,6 +37,14 @@ export default defineComponent({
     closeDetails() {
       this.modal = false
       this.details = null
+    },
+    async reloadUsers() {
+      this.Profiles = null
+      this.Profiles = await this.fetchData()
+
+      if (!this.Profiles) {
+        this.Profiles = false
+      }
     }
   },
 
@@ -50,8 +58,19 @@ export default defineComponent({
     </h1>
 
 
-    <div v-if="!Profiles" class="flex flex-col flex-nowrap w-full items-center">
+    <div v-if="Profiles === null" class="flex flex-col flex-nowrap w-full items-center">
       <Spinner/>
+    </div>
+
+    <div v-if="Profiles === false" class="flex flex-col flex-nowrap w-full items-center">
+      <p class="font-sans text-red-500 font-bold mb-4">
+        Oops.. Something went wrong
+      </p>
+      <button type="button" class="border p-2 rounded bg-slate-600 border-slate-200" @click="reloadUsers">
+        <p class="text-slate-50 font-sans font-regular text-sm">
+          Try Again
+        </p>
+      </button>
     </div>
 
     <div v-if="Profiles" class="flex flex-row flex-wrap gap-8 w-full justify-center">
