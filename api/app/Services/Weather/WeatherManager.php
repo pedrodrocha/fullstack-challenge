@@ -2,6 +2,7 @@
 
 namespace App\Services\Weather;
 
+use App\Services\Weather\WeatherData;
 use App\Services\Weather\Drivers\Driver;
 use App\Services\Weather\Exceptions\DriverDoesNotExistException;
 
@@ -54,7 +55,7 @@ class WeatherManager
     /**
      * Attempt to retrieve the weather of the user.
      */
-    public function get(float $lat, float $long)
+    public function get(float $lat, float $long): WeatherData
     {
         $weather = $this->driver->get([
             'lat' => $lat,
