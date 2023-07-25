@@ -2,7 +2,6 @@
 
 namespace App\Services\Weather;
 
-use App\Services\Weather\WeatherData;
 use App\Services\Weather\Drivers\Driver;
 use App\Services\Weather\Exceptions\DriverDoesNotExistException;
 
