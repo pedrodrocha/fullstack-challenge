@@ -61,9 +61,15 @@
       this.fetchData()
     },
     methods: {
-      async fetchData() {
-        const url = 'http://localhost/'
-        this.profiles = await getUserProfiles(url)
+      async fetchData(): Promise<void> {
+        try {
+          let response  = await getUserProfiles()
+          if (response && response.status) {
+            this.profiles = response.data.users
+          }
+        } catch (error) {
+          console.log(error)
+        }
       },
       openDetails(data: Object) {
         this.details = data
@@ -71,7 +77,7 @@
       },
       closeDetails() {
         this.modal = false
-        this.details = null
+        this.details = false
       },
       async reloadUsers() {
         this.profiles = false

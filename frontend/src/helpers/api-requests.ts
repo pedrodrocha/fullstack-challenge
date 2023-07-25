@@ -1,33 +1,21 @@
 import axios from "axios";
+import type { AxiosResponse } from "axios";
 
-export async function getUserProfiles(url: string) {
-    let response;
+export async function getUserProfiles(): Promise<AxiosResponse<any, any>> {
+    const url = 'http://localhost/'
     
-    response = await axios.get(url)
-        .catch(function (error) {
-            response = false
-        });
-
-    if (response && response.status) {
-        return response.data.users
-    }
-
-    return false
+    return await axios.get(url)
 
 }
 
-export async function getUserWeather(url: string, new_retrieval: boolean) {
-    let response = await axios({
+export async function getUserWeather(id: Number, new_retrieval: boolean): Promise<AxiosResponse<any, any>> {
+    const url = 'http://localhost/users/weather/' + id
+
+    return await axios({
         method: 'get',
         url: url,
         params: {
           refresh: new_retrieval ? 'refresh' : null
         }
       });
-
-    if (response.status === 200 && response.data.success) {
-        return response.data
-    }
-
-    return false
 }

@@ -6,22 +6,13 @@
                 Current Temperature
             </p>
 
-            <div v-if="!Weather" class="bg-slate-400 h-10 w-24 animate-pulse">
+            <div v-if="!weather" class="bg-slate-400 h-10 w-24 animate-pulse">
             </div>
 
-            <div v-if="Weather">
-                <div v-if="Weather.data.temp">
+            <div v-if="weather">
+                <div v-if="weather.temp">
                     <p class="font-serif font-bold text-4xl text-gray-700">
-                        <code>{{ Math.round(Weather.data.temp) }}</code> ºC
-                    </p>
-                </div>
-
-                <div v-if="!Weather.data.temp">
-                    <p class="font-serif font-bold text-sm text-red-600 text-center">
-                        Oops.. something went wrong
-                    </p>
-                    <p class="font-serif font-bold text-sm text-red-600 text-center">
-                        Try refreshing the card
+                        <code>{{ Math.round(weather.temp) }}</code> ºC
                     </p>
                 </div>
             </div>
@@ -29,30 +20,31 @@
         </div>
 
         <div class="flex flex-row flex-nowrap justify-between w-full px-2 mb-4">
-            <button v-if="Weather" @click="updateWeather" type="button" class="flex flex-row flex-nowrap items-center justify-center gap-2">
+            <button v-if="weather" @click="updateWeather" type="button" class="flex flex-row flex-nowrap items-center justify-center gap-2">
                 <div class="h-3 w-3"><RefreshIcon/></div>
                 <p class="text-sky-900 font-bold text-sm">
                     Refresh
                 </p>                        
             </button>
 
-            <button v-if="Weather" type="button" @click="$emit('openDetails', Weather.data)">
+            <button v-if="weather" type="button" @click="$emit('openDetails', weather)">
                 <p class="text-sky-900 font-bold text-sm">
                     More Details
                 </p>
             </button>
 
-            <div v-if="!Weather" class="bg-slate-400 h-6 w-20 animate-pulse"></div>
-            <div v-if="!Weather" class="bg-slate-400 h-6 w-20 animate-pulse"></div>
+            <div v-if="!weather" class="bg-slate-400 h-6 w-20 animate-pulse"></div>
+            <div v-if="!weather" class="bg-slate-400 h-6 w-20 animate-pulse"></div>
         </div>
 
         <div>
 
-            <div v-if="!Weather" class="bg-slate-400 h-3 w-24 animate-pulse">
+            <div v-if="!weather" class="bg-slate-400 h-3 w-24 animate-pulse">
             </div>
 
-            <p v-if="Weather" class="font-serif font-light text-slate-400  text-xs self-start justify-self-start">
-                Last Updated: <span v-text="lastUpdate(new Date(this.Weather.last_retrieved))"> </span> min ago
+            <p v-if="weather" class="font-serif font-light text-slate-400  text-xs self-start justify-self-start">
+                
+                Last Updated: <span v-text="lastUpdate()"> </span> min ago
             </p>
         </div>
     </div>
@@ -65,12 +57,24 @@
 
     import { defineComponent } from 'vue'
 
+
+    interface WeatherData {
+        temp?: number;
+    }
+
+
     export default defineComponent({
-        data: () => ({
-            Weather: null
-        }),
+        data() {
+            return {
+                weather: null as WeatherData | null,
+                lastRetrieved: false as string | boolean,
+            };
+        },
         props: {
-            id: Number
+            id: {
+                type: Number,
+                required: true,
+            },
         },
         components: {
             RefreshIcon,
@@ -79,19 +83,36 @@
             this.fetchData(false)
         },
         methods: {
-            async fetchData(refresh: boolean) {
-                const url = 'http://localhost/users/weather/' + this.id
-                this.Weather = await getUserWeather(url, refresh)
-            },
-            lastUpdate(last: Date) {
-                let now = new Date();
+            async fetchData(refresh_data: boolean) {
+                try {
+                    let response = await getUserWeather(this.id, refresh_data)
 
-                return Math.round((now.getTime() - last.getTime()) / 60000)
+                    if (response.status === 200 && response.data.success) {
+                        this.weather = response.data.data
+
+                        this.lastRetrieved = response.data.last_retrieved;
+                    } else {
+                        this.weather = null;
+                    }
+                
+                } catch (error) {
+                    console.log(error)
+                    this.weather = null;
+                }
             },
             async updateWeather() {
-                this.Weather = null
+                this.weather = null
                 await this.fetchData(true)
             },
+            lastUpdate(): Number {
+                // @ts-ignore 
+                let lastDate = new Date(this.lastRetrieved)
+                return this.minutesFromNow(lastDate)
+            },
+            minutesFromNow(date: Date): Number {
+                let now = new Date();
+                return Math.round((now.getTime() - date.getTime()) / 60000)
+            }
         }
         
     })
