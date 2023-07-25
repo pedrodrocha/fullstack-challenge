@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\User\RetrieveCurrentWeather;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use App\Actions\User\RetrieveCurrentWeather;
 
 class CurrentWeatherController extends Controller
 {
     public function show(Request $request, RetrieveCurrentWeather $action, int $userId)
     {
 
+        // Validate the user_id
         $validator = Validator::make(['user_id' => $userId], [
             'user_id' => ['required', 'exists:users,id'],
         ])->stopOnFirstFailure(true);
@@ -19,21 +21,32 @@ class CurrentWeatherController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
 
-        $refresh = $request['refresh'] === 'refresh' ? true : false;
+        // Check the refresh flag
+        $refresh = $request->input('refresh') === 'refresh';
 
-        if ($weather = $action->handle(User::find($userId), $refresh)) {
+        try {
+            // Retrieve weather data using the action
+            $weather = $action->handle(User::findOrFail($userId), $refresh);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error retrieving weather data.',
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+
+        if ($weather) {
             return response()->json([
                 'success' => true,
                 'data' => $weather['data'],
-                'last_retrieved' => $weather['retrieved']
-            ], 200);
+                'last_retrieved' => $weather['retrieved'],
+            ], Response::HTTP_OK);
         }
 
         return response()->json([
             'success' => false,
-        ], 200);
+        ], Response::HTTP_OK);
     }
 }

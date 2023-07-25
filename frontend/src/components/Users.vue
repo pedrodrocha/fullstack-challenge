@@ -100,8 +100,7 @@ export default defineComponent({
         this.fetchError = true;
       }
     },
-    openDetails(data: Object) {
-      console.log(data);
+    openDetails(data: WeatherData) {
       this.details = data;
       this.modal = true;
     },
