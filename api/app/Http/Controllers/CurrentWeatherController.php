@@ -35,7 +35,7 @@ class CurrentWeatherController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        if ($weather) {
+        if ($weather !== []) {
             return response()->json([
                 'success' => true,
                 'data' => $weather['data'],

@@ -3,28 +3,35 @@
 namespace App\Actions\User;
 
 use App\Models\User;
+use App\Services\Weather\WeatherData;
 use Illuminate\Support\Facades\Cache;
 
 class RetrieveCurrentWeather
 {
     public function handle(User $user, bool $refresh): array
     {
-        if (! Cache::has('weather_'.$user->id) || $refresh) {
-            $weather = new \Weather();
-            $weather = $weather->get($user->latitude, $user->longitude);
-
-            $weatherObj = [
-                'retrieved' => now(),
-                'data' => $weather,
-            ];
+        if (!Cache::has('weather_' . $user->id) || $refresh) {
+            $weather = $this->fetchWeatherData($user->latitude, $user->longitude);
 
             if ($weather) {
-                Cache::put('weather_'.$user->id, $weatherObj, now()->addHours(1));
-            }
+                $weatherObj = [
+                    'retrieved' => now(),
+                    'data' => $weather,
+                ];
 
-            return $weatherObj;
+                Cache::put('weather_' . $user->id, $weatherObj, now()->addHours(1));
+
+                return $weatherObj;
+            }
         }
 
-        return  Cache::get('weather_'.$user->id);
+        return Cache::get('weather_' . $user->id);
+
+    }
+
+    private function fetchWeatherData($latitude, $longitude): WeatherData
+    {
+        $weather = new \Weather();
+        return $weather->get($latitude, $longitude);
     }
 }
