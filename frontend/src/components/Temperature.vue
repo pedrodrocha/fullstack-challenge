@@ -79,11 +79,11 @@
         components: {
             RefreshIcon,
         },
-        created() {
+        created(): void {
             this.fetchData(false)
         },
         methods: {
-            async fetchData(refresh_data: boolean) {
+            async fetchData(refresh_data: boolean): Promise<void> {
                 try {
                     let response = await getUserWeather(this.id, refresh_data)
 
@@ -100,7 +100,7 @@
                     this.weather = null;
                 }
             },
-            async updateWeather() {
+            async updateWeather(): Promise<void> {
                 this.weather = null
                 await this.fetchData(true)
             },
