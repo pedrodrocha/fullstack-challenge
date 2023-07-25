@@ -105,7 +105,7 @@
             },
             lastUpdate(): Number {
                 // @ts-ignore 
-                let lastDate = new Date(this.lastRetrieved)
+                const lastDate = new Date(this.lastRetrieved)
                 return this.minutesFromNow(lastDate)
             },
             minutesFromNow(date: Date): Number {

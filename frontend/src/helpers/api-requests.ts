@@ -8,8 +8,9 @@ export async function getUserProfiles(): Promise<AxiosResponse<any, any>> {
 
 }
 
-export async function getUserWeather(id: Number, new_retrieval: boolean): Promise<AxiosResponse<any, any>> {
-    const url = 'http://localhost/users/weather/' + id
+export async function getUserWeather(id: Number, newRetrieval: boolean): Promise<AxiosResponse<any, any>> {
+    const url = `http://localhost/users/weather/${id}`;
+    const params = newRetrieval ? { refresh: "refresh" } : null;
 
-    return await axios.get(url, { params: { refresh: new_retrieval ? 'refresh' : null } })
+    return await axios.get(url, { params })
 }
