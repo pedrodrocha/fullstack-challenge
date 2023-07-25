@@ -4,7 +4,7 @@
             <code> {{ profile?.name }} </code>
         </p>
 
-        <Temperature :id="profile?.id" @open-details="openDetails"/>
+        <Temperature v-if="profile?.id" :id="profile?.id" @open-details="openDetails"/>
     </div>   
 </template>
 
@@ -12,15 +12,27 @@
     import Temperature from '@/components/Temperature.vue'
     import { defineComponent } from 'vue'
 
+    interface UserProfile {
+        id: number;
+        name: string;
+    }
+
+    interface WeatherData {
+
+    }
+
     export default defineComponent({
         props: {
-            profile: Object
+            profile: {
+                type: Object as () => UserProfile | null | undefined,
+                required: true,
+            },
         },
         components: {
             Temperature,
         },
         methods: {
-            openDetails(data: Object) {
+            openDetails(data: WeatherData) {
                 this.$emit('openDetails', data)
             }
         }

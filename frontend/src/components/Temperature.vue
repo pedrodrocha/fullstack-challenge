@@ -71,7 +71,7 @@
         }),
         props: {
             id: {
-                type: Number,
+                type: Number ,
                 required: true,
             },
         },
