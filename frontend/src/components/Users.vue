@@ -27,7 +27,7 @@
     </div>
 
     <div v-if="modal">
-      <DetailsModal :details="details" @close-details="closeDetails"/>
+      <DetailsModal :details="details ? details : null" @close-details="closeDetails"/>
     </div>     
   
   </div>

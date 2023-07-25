@@ -10,68 +10,12 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-x-6 gap-y-6 w-full p-0 justify-center">
-                        <div v-if="details?.clouds" class="flex flex-col flex-nowrap items-center justify-center gap-1">
-                            <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
-                                Clouds (%)
-                            </p>
-
-                            <p class="font-sans font-regular text-gray-50 text-base">
-                                <span v-text="details.clouds"></span>%
-                            </p>
-                        </div>
-
-
-                        <div v-if="details?.humidity" class="flex flex-col flex-nowrap items-center justify-center gap-1">
-                            <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
-                                Humidity
-                            </p>
-
-                            <p class="font-sans font-regular text-gray-50 text-base">
-                                <span v-text="details.humidity"></span>%
-                            </p>
-                        </div>
-
-                        <div v-if="details?.wind_speed" class="flex flex-col flex-nowrap items-center justify-center gap-1">
-                            <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
-                                Wind Speed
-                            </p>
-
-                            <p class="font-sans font-regular text-gray-50 text-base">
-                                <span v-text="details.wind_speed"></span> m/s
-                            </p>
-                        </div>
-
-
-                        <div v-if="details?.wind_deg" class="flex flex-col flex-nowrap items-center justify-center gap-1">
-                            <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
-                                Wind Degree
-                            </p>
-
-                            <p class="font-sans font-regular text-gray-50 text-base">
-                                <span v-text="details.wind_deg"></span>º
-                            </p>
-                        </div>
-
-                        <div v-if="details?.wind_gust" class="flex flex-col flex-nowrap items-center justify-center gap-1">
-                            <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
-                                Wind Gust
-                            </p>
-
-                            <p class="font-sans font-regular text-gray-50 text-base">
-                                <span v-text="details.wind_gust"></span> m/s
-                            </p>
-                        </div>
-
-                        <div v-if="details?.pressure" class="flex flex-col flex-nowrap items-center justify-center gap-1">
-                            <p class="font-sans font-bold text-gray-50 text-lg text-center leading-none">
-                                Atmospheric Pressure
-                            </p>
-
-                            <p class="font-sans font-regular text-gray-50 text-base">
-                                <span v-text="details.pressure"></span> hPa
-                            </p>
-                        </div>
-
+                        <DetailsModalItem v-if="details?.clouds" :label="'Clouds (%)'" :value="details.clouds" :unit="'%'" />
+                        <DetailsModalItem v-if="details?.humidity" :label="'Humidity'" :value="details.humidity" :unit="'%'" />
+                        <DetailsModalItem v-if="details?.wind_speed" :label="'Wind Speed'" :value="details.wind_speed" :unit="'m/s'" />
+                        <DetailsModalItem v-if="details?.wind_deg" :label="'Wind Degree'" :value="details.wind_deg" :unit="'º'" />
+                        <DetailsModalItem v-if="details?.wind_gust" :label="'Wind Gust'" :value="details.wind_gust" :unit="'m/s'" />
+                        <DetailsModalItem v-if="details?.pressure" :label="'Atmospheric Pressure'" :value="details.pressure" :unit="'hPa'" />
                     </div>
                 </div>
             </div>
@@ -82,6 +26,7 @@
 
 <script lang="ts">
     import CloseIcon from "@/components/icons/CloseIcon.vue";
+    import DetailsModalItem from "./DetailsModalItem.vue";
 
     import { defineComponent } from 'vue'
 
@@ -104,6 +49,7 @@
         },
         components: {
             CloseIcon,
+            DetailsModalItem
         }
 
     })
