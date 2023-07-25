@@ -55,12 +55,16 @@ class ApiNinjas extends Driver
      */
     protected function getWeather(string $url): object
     {
-        $response = Http::withHeaders([
-            'X-Api-Key' => config('weather.api-ninjas')['key'],
-        ])->get($url);
+        try {
+            $response = Http::withHeaders([
+                'X-Api-Key' => config('weather.api-ninjas')['key'],
+            ])->get($url);
 
-        if ($response->status() === 200) {
-            return $response->object();
+            if ($response->successful()) {
+                return $response->object();
+            }
+        } catch (\Exception $e) {
+            return  (object) [];
         }
 
         return  (object) [];

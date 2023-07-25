@@ -30,7 +30,7 @@ class WeatherManager
     /**
      * Set the current driver to use.
      */
-    public function setDriver(Driver $driver): static
+    public function setDriver(Driver $driver): self
     {
         $this->driver = $driver;
 
@@ -40,9 +40,10 @@ class WeatherManager
     /**
      * Set the default weather driver to use.
      */
-    public function setDefaultDriver(): static
+    public function setDefaultDriver(): self
     {
-        $this->loaded[] = $driver = $this->getDriver($this->getDefaultDriver());
+        $defaultDriver = $this->getDefaultDriver();
+        $this->loaded[] = $driver = $this->getDriver($defaultDriver);
 
         foreach ($this->getDriverFallbacks() as $fallback) {
             $driver->fallback($this->loaded[] = $this->getDriver($fallback));

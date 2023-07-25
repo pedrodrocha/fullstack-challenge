@@ -57,10 +57,14 @@ class Weatherstack extends Driver
      */
     protected function getWeather(string $url): object
     {
-        $response = Http::get($url);
+        try {
+            $response = Http::get($url);
 
-        if ($response->status() === 200) {
-            return $response->object();
+            if ($response->successful()) {
+                return $response->object();
+            }
+        } catch (\Exception $e) {
+            return  (object) [];
         }
 
         return  (object) [];
