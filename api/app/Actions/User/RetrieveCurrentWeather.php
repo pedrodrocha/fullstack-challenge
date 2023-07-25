@@ -23,6 +23,8 @@ class RetrieveCurrentWeather
 
                 return $weatherObj;
             }
+
+            return [];
         }
 
         return Cache::get('weather_' . $user->id);
