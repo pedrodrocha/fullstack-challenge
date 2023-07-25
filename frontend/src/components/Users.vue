@@ -5,11 +5,11 @@
     </h1>
 
 
-    <div v-if="!profiles" class="flex flex-col flex-nowrap w-full items-center">
+    <div v-if="!profiles && !fetchError" class="flex flex-col flex-nowrap w-full items-center">
       <Spinner/>
     </div>
 
-    <div v-if="false" class="flex flex-col flex-nowrap w-full items-center">
+    <div v-if="fetchError" class="flex flex-col flex-nowrap w-full items-center">
       <p class="font-sans text-red-500 font-bold mb-4">
         Oops.. Something went wrong
       </p>
@@ -42,13 +42,28 @@
   import { defineComponent } from 'vue'
   import { getUserProfiles } from '../helpers/api-requests';
 
+  interface UserProfile {
+    id?: number;
+    created_at?: string;
+    updated_at?: string;
+    email?: string
+    email_verified_at?: string;
+    latitude?: string;
+    longitude?: string;
+    name?: string;   
+  }
+
+  interface WeatherData {
+
+  }
+
   export default defineComponent({
       
     data: () => ({
-      profiles: false,
-      details: false,
+      profiles: false as Boolean | UserProfile[],
+      details: false as Boolean | WeatherData,
       modal: false,
-      
+      fetchError: false,      
 
     }),
     components: {
@@ -62,16 +77,21 @@
     },
     methods: {
       async fetchData(): Promise<void> {
-        try {
-          let response  = await getUserProfiles()
-          if (response && response.status) {
-            this.profiles = response.data.users
-          }
-        } catch (error) {
-          console.log(error)
+      try {
+        const response = await getUserProfiles();
+        if (response && response.status === 200) {
+          this.profiles = response.data.users;
+          this.fetchError = false;
+        } else {
+          this.fetchError = true;
         }
-      },
+      } catch (error) {
+        console.log(error);
+        this.fetchError = true;
+      }
+    },
       openDetails(data: Object) {
+        console.log(data)
         this.details = data
         this.modal = true
       },
@@ -81,7 +101,7 @@
       },
       async reloadUsers() {
         this.profiles = false
-        this.profiles = await this.fetchData()
+        await this.fetchData()
 
         if (!this.profiles) {
           this.profiles = false
