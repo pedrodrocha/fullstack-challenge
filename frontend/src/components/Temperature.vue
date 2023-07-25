@@ -64,12 +64,11 @@
 
 
     export default defineComponent({
-        data() {
-            return {
-                weather: null as WeatherData | null,
-                lastRetrieved: false as string | boolean,
-            };
-        },
+        data: () => ({
+            weather: null as WeatherData | null,
+            lastRetrieved: false as string | boolean,    
+
+        }),
         props: {
             id: {
                 type: Number,

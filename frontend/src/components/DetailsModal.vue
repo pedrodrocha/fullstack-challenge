@@ -85,9 +85,22 @@
 
     import { defineComponent } from 'vue'
 
+    interface WeatherDetails {
+        weather?: string;
+        clouds?: number;
+        humidity?: number;
+        wind_speed?: number;
+        wind_deg?: number;
+        wind_gust?: number;
+        pressure?: number;
+    }
+
     export default defineComponent({
         props: {
-            details: [Object, Boolean],
+            details: {
+                type: Object as () => WeatherDetails | null,
+                required: true,
+            },
         },
         components: {
             CloseIcon,
